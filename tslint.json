@@ -6,6 +6,7 @@
     "jsRules": {},
     "rules": {
         "no-angle-bracket-type-assertion": false,
+        "ordered-imports": false,
         "quotemark": [ true, "single", "avoid-escape" ]
     },
     "rulesDirectory": []
