@@ -1,14 +1,11 @@
-
-export function doCalculation(...args: number[]): number {
-  let total = 0;
-
-  for (const num of args) {
-    total += num;
+export class App {
+  public render(divId: string, text: string) {
+    const el: HTMLElement = document.getElementById(divId);
+    el.innerText = text;
   }
-
-  return total;
 }
 
 window.onload = () => {
-  console.log(doCalculation(1, 2, 3, 4, 5));
+  const app = new App();
+  app.render('app', 'Hello World');
 };

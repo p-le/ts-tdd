@@ -14,11 +14,18 @@ module.exports = function(config) {
     },
     reporters: ['spec', 'karma-typescript'],
     karmaTypescriptConfig: {
+      compilerOptions: {
+        strictNullChecks: false,
+        noImplicitAny: true
+      },
       reports: {
         "html": "__coverage__",
         "text-summary": ""
-      },
-      tsconfig: './tsconfig.json'
+      }
+    },
+    browserConsoleLogOptions: {
+      terminal: true,
+      level: "debug"
     },
     port: 9876,
     colors: true,
