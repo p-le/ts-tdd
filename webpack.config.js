@@ -2,9 +2,19 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+function isExternal(module) {
+  const context = module.context;
+  if (typeof context !== 'string') {
+    return false;
+  }
+
+  return context.indexOf('node_modules') !== -1;
+}
+
 module.exports = {
+  devtool: 'cheap-module-eval-source-map',
   entry: {
-    app: './src/app.ts',
+    app: './src/app.tsx',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -21,17 +31,28 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, 'src/index.html')
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function(module) {
+        return isExternal(module);
+      }
     })
   ],
   resolve: {
-    extensions: ['.ts', '.js', ' ']
+    extensions: [".ts", ".tsx", ".js", ".json"]
   },
   module: {
     loaders: [
+      { 
+        enforce: "pre", 
+        test: /\.js$/, 
+        loader: "source-map-loader" 
+      },
       {
-        test: /\.ts?$/,
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'ts-loader'
+        loader: 'awesome-typescript-loader'
       }
     ]
   }
